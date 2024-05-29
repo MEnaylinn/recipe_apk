@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Notes {
@@ -17,6 +18,9 @@ public class Notes {
 	@Lob
 	private String description;
 	
+	@OneToOne(mappedBy = "note")
+	private Recipe recipe;
+	
 	public Notes() {
 		// TODO Auto-generated constructor stub
 	}
@@ -24,6 +28,24 @@ public class Notes {
 	public Notes(String description) {
 		super();
 		this.description = description;
+	}
+	
+	
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Recipe getRecipe() {
+		return recipe;
+	}
+
+	public void setRecipe(Recipe recipe) {
+		this.recipe = recipe;
 	}
 
 	@Override

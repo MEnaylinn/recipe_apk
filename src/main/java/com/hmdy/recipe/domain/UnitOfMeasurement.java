@@ -7,24 +7,50 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "uom")
 public class UnitOfMeasurement {
+	
 	@Id
-	@GeneratedValue ( strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private String name;
+	
 	@Lob
 	private String description;
 	
-	public UnitOfMeasurement() {
-		// TODO Auto-generated constructor stub
-	}
+	public UnitOfMeasurement() {}
 
 	public UnitOfMeasurement(String name, String description) {
 		super();
 		this.name = name;
+		this.description = description;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -51,4 +77,6 @@ public class UnitOfMeasurement {
 				&& Objects.equals(name, other.name);
 	}
 	
+	
+
 }

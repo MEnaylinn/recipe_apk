@@ -4,10 +4,15 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Ingredient {
@@ -18,16 +23,44 @@ public class Ingredient {
 	
 	@Lob
 	private String description;
+	
 	private BigDecimal amount;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "recipe_id")
+	private Recipe recipe;
+	
+	@ManyToOne
+	@JoinColumn(name = "uom_id")
+	private UnitOfMeasurement unitOfMeasurement;
+	
+	public Ingredient() {}
 
-	public Ingredient() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public Ingredient(String description, BigDecimal amount) {
+	public Ingredient(String description, BigDecimal amount, Recipe recipe, UnitOfMeasurement unitOfMeasurement) {
 		super();
 		this.description = description;
 		this.amount = amount;
+		this.recipe = recipe;
+		this.unitOfMeasurement = unitOfMeasurement;
+	}
+
+
+
+
+	public UnitOfMeasurement getUnitOfMeasurement() {
+		return unitOfMeasurement;
+	}
+
+	public void setUnitOfMeasurement(UnitOfMeasurement unitOfMeasurement) {
+		this.unitOfMeasurement = unitOfMeasurement;
+	}
+
+	public Recipe getRecipe() {
+		return recipe;
+	}
+
+	public void setRecipe(Recipe recipe) {
+		this.recipe = recipe;
 	}
 
 	public Long getId() {
@@ -76,5 +109,5 @@ public class Ingredient {
 		return Objects.equals(amount, other.amount) && Objects.equals(description, other.description)
 				&& Objects.equals(id, other.id);
 	}
-	
+
 }

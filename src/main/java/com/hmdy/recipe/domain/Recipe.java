@@ -1,50 +1,111 @@
 package com.hmdy.recipe.domain;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Recipe {
-
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String name;
+	
 	@Lob
 	private String description;
+	
 	private Integer prepTime;
 	private Integer cookTime;
 	private String source;
+	private Integer servings;
+	
 	@Lob
 	private String directions;
+	
 	@Enumerated(EnumType.STRING)
 	private Difficulty difficulty;
-	@Lob
-	private Byte[] image;	
 	
-	public Recipe() {
-		// TODO Auto-generated constructor stub
-	}
+	@Lob
+	private Byte[] image;
+	
+	@OneToMany(mappedBy = "recipe",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	private Set<Ingredient> ingredients = new HashSet<>();
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "note_id")
+	private Notes note;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "recipe_category",joinColumns = @JoinColumn(name = "recipe_id"),
+	inverseJoinColumns = @JoinColumn(name = "category_id")
+		)
+	private Set<Category> categories = new HashSet<>();
+	
+	public Recipe() {}
 
-	public Recipe(String name, String description, Integer prepTime, Integer cookTime, String source,
-			String directions, Difficulty difficulty, Byte[] image) {
+
+	public Recipe(String name, String description, Integer prepTime, Integer cookTime, String source, Integer servings,
+			String directions, Difficulty difficulty) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.prepTime = prepTime;
 		this.cookTime = cookTime;
 		this.source = source;
+		this.servings = servings;
 		this.directions = directions;
 		this.difficulty = difficulty;
-		this.image = image;
+	}
+
+	public Integer getServings() {
+		return servings;
+	}
+
+
+	public void setServings(Integer servings) {
+		this.servings = servings;
+	}
+
+
+	public Set<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(Set<Category> categories) {
+		this.categories = categories;
+	}
+
+	public Notes getNote() {
+		return note;
+	}
+
+	public void setNote(Notes note) {
+		this.note = note;
+	}
+
+	public Set<Ingredient> getIngredients() {
+		return ingredients;
+	}
+
+	public void setIngredients(Set<Ingredient> ingredients) {
+		this.ingredients = ingredients;
 	}
 
 	public Long getId() {
@@ -119,22 +180,20 @@ public class Recipe {
 		this.image = image;
 	}
 
+
 	@Override
 	public String toString() {
 		return "Recipe [id=" + id + ", name=" + name + ", description=" + description + ", prepTime=" + prepTime
-				+ ", cookTime=" + cookTime + ", source=" + source + ", directions=" + directions + ", difficulty="
-				+ difficulty + ", image=" + Arrays.toString(image) + "]";
+				+ ", cookTime=" + cookTime + ", source=" + source + ", servings=" + servings + ", directions="
+				+ directions + ", difficulty=" + difficulty + "]";
 	}
+
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(image);
-		result = prime * result
-				+ Objects.hash(cookTime, description, difficulty, directions, id, name, prepTime, source);
-		return result;
+		return Objects.hash(cookTime, description, difficulty, directions, id, name, prepTime, servings, source);
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -147,8 +206,11 @@ public class Recipe {
 		Recipe other = (Recipe) obj;
 		return Objects.equals(cookTime, other.cookTime) && Objects.equals(description, other.description)
 				&& difficulty == other.difficulty && Objects.equals(directions, other.directions)
-				&& Objects.equals(id, other.id) && Arrays.equals(image, other.image) && Objects.equals(name, other.name)
-				&& Objects.equals(prepTime, other.prepTime) && Objects.equals(source, other.source);
+				&& Objects.equals(id, other.id) && Objects.equals(name, other.name)
+				&& Objects.equals(prepTime, other.prepTime) && Objects.equals(servings, other.servings)
+				&& Objects.equals(source, other.source);
 	}
+
+	
 	
 }

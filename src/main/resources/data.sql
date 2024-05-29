@@ -1,0 +1,14 @@
+INSERT INTO category (name,description) VALUES ('Asian','This is asian food'); 
+INSERT INTO category (name,description) VALUES ('American','This is american food'); 
+INSERT INTO category (name,description) VALUES ('FastFood','This is fastfood'); 
+INSERT INTO category (name,description) VALUES ('European','This is european food'); 
+INSERT INTO category (name,description) VALUES ('Italian','This is italian food'); 
+INSERT INTO uom (name,description) VALUES ('teaspoon','amount of a teaspoon');
+INSERT INTO uom (name,description) VALUES ('tablespoon','amount of a tablespoon');
+INSERT INTO uom (name,description) VALUES ('ounce','amount of a unit of ounce');
+INSERT INTO uom (name,description) VALUES ('gill','amount of a gill');
+INSERT INTO uom (name,description) VALUES ('cup','amount of a cup');
+INSERT INTO uom (name,description) VALUES ('pint','amount of a pint');
+INSERT INTO uom (name,description) VALUES ('quart','amount of a quart');
+INSERT INTO uom (name,description) VALUES ('gallon','amount of a gallon');
+INSERT INTO uom (name,description) VALUES ('pound','amount of a pound');
