@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +29,7 @@ public class Category {
 	private String description;
 	
 	@ManyToMany(fetch = FetchType.EAGER,mappedBy = "categories")
+	@JsonIgnore
 	private Set<Recipe> recipes = new HashSet<>();
 	
 	public Category() {}

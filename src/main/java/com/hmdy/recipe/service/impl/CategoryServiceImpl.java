@@ -31,4 +31,23 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryRepository.findByName(name);
 	}
 
+	@Override
+	public Category createCategory(Category category) {
+		// TODO Auto-generated method stub
+		return categoryRepository.save(category);
+	}
+
+	@Override
+	public void deleteCategoryById(Long id) {
+		// TODO Auto-generated method stub
+		categoryRepository.deleteById(id);
+		
+	}
+
+	@Override
+	public Optional<Category> getCategoryById(Long id) {
+		// TODO Auto-generated method stub
+		return categoryRepository.findById(id);
+	}
+
 }
